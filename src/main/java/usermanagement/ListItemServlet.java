@@ -19,7 +19,7 @@ public class ListItemServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
 
         HttpSession s = req.getSession();
-        Object o = s.getAttribute("id"); // daca pe sesiune exista obiectul numit id sau nu exista voi lua diferite decizii
+        Object o = s.getAttribute("id");
 
         if (o != null) {
 

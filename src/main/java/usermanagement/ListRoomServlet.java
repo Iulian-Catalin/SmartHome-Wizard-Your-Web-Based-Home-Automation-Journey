@@ -5,34 +5,39 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.json.JSONObject;
 import usermanagement.db.DBItemList;
+import usermanagement.db.DBRoomList;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
+import java.util.List;
 
-@WebServlet("/additem")
-public class AddItemServlet extends HttpServlet {
+@WebServlet("/listroom")
+public class ListRoomServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
 
         HttpSession s = req.getSession();
         Object o = s.getAttribute("id");
-        String itemname = req.getParameter("itemname");
-        int room = Integer.parseInt(req.getParameter("room"));
-        int watts = Integer.parseInt(req.getParameter("watts"));
-        boolean on = false;
-        if (o != null && itemname != null) {
 
-            LocalDate ld = LocalDate.now();
-            int iduser = (int) o;
+        if (o != null) {
 
-            MyItemList mfl = new MyItemList(itemname, ld, iduser, room, watts, on);
-            DBItemList db = new DBItemList();
-            db.newItem(mfl);
+            Integer i = (Integer) o;
+            int iduser = i;
+            String search = req.getParameter("search");
+            if (search == null)
+                search = "";
+
+            DBRoomList db = new DBRoomList();
+            List<MyRoomList> l = db.getRoomList(iduser, search);
+            JSONObject json = new JSONObject();
+            json.put("listFromBackend", l);
+            String result = json.toString();
+            returnJsonResponse(resp, result);
         } else {
-            error(resp, "Operation forbidden, user is not logged in or itemname is not arriving to server.");
+            error(resp, "operation forbidden. user is not logged in.");
         }
     }
 

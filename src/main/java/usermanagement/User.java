@@ -1,19 +1,31 @@
 package usermanagement;
 
 public class User {
-    private String email; // username = email
+    private String email;
+
+    private String confirmEmail;
     private String pwd;
+
+    public User(String email, String confirmEmail, String pwd, String confirmPwd, boolean accept, boolean newsletter) {
+        this.email = email;
+        this.confirmEmail = confirmEmail;
+        this.pwd = pwd;
+        this.confirmPwd = confirmPwd;
+        this.accept = accept;
+        this.newsletter = newsletter;
+    }
+
+    public String getConfirmEmail() {
+        return confirmEmail;
+    }
+
     private String confirmPwd;
     private boolean accept;
     private boolean newsletter;
     private int id;
 
-    public User(String email, String pwd, String confirmPwd, boolean accept, boolean newsletter) {
-        this.email = email;
-        this.pwd = pwd;
-        this.confirmPwd = confirmPwd;
-        this.accept = accept;
-        this.newsletter = newsletter;
+    public void setConfirmEmail(String confirmEmail) {
+        this.confirmEmail = confirmEmail;
     }
 
     public User() {
@@ -71,6 +83,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "email='" + email + '\'' +
+                "confirmEmail='" + confirmEmail + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", confirmPwd='" + confirmPwd + '\'' +
                 ", accept=" + accept +

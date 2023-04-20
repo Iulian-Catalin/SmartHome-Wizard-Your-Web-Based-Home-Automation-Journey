@@ -1,6 +1,17 @@
-function newToDo() {
-    var name = document.getElementById('name').value;
-    var urlEnc = encodeURI('additem?itemname=' + name)
+function newItemToDo() {
+    var name = document.getElementById('name1').value;
+    var room = document.getElementById('room1').value;
+    var watts = document.getElementById('watts1').value;
+    var urlEnc = encodeURI('additem?itemname='+name+'&room='+room+'&watts='+watts)
+    console.log(urlEnc);
+    $.ajax({url:urlEnc}).done(function (response) {
+        location.href = "listMyStuff.jsp";
+    });
+}
+
+function newRoomToDo() {
+    var name = document.getElementById('name2').value;
+    var urlEnc = encodeURI('addroom?roomname=' + name)
     $.ajax({
         url: urlEnc
     }).done(function (response) {
@@ -8,12 +19,21 @@ function newToDo() {
     });
 }
 
-function loadToDo() {
+function loadItemToDo() {
     $.ajax({
         url: 'listitem'
     }).done(function (response) {
         //  printOnDiv(response.listFromBackend);
         display(response.listFromBackend);
+    });
+}
+
+function loadRoomToDo() {
+    $.ajax({
+        url: 'listroom'
+    }).done(function (response) {
+        //  printOnDiv(response.listFromBackend);
+        display2(response.listFromBackend);
     });
 }
 
@@ -31,10 +51,24 @@ function display(lista) {
         randuri += "<tr>" +
             "<td>" + obiect.itemName + "</td>" +
             "<td>" + obiect.itemDate + "</td>" +
+            "<td>" + obiect.room + "</td>" +
+            "<td>" + obiect.watts + "</td>" +
+            "<td>" + obiect.on + "</td>" +
             // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
             "</tr>";
     });
-    $("#obiect").html(randuri);
+    $("#obiect1").html(randuri);
+}
+
+function display2(lista) {
+    var randuri = "";
+    lista.forEach(function (obiect) {
+        randuri += "<tr>" +
+            "<td>" + obiect.roomName + "</td>" +
+            // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
+            "</tr>";
+    });
+    $("#obiect2").html(randuri);
 }
 
 function search(myText) {

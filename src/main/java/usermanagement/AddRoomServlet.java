@@ -5,34 +5,29 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import usermanagement.db.DBItemList;
+import usermanagement.db.DBRoomList;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDate;
 
-@WebServlet("/additem")
-public class AddItemServlet extends HttpServlet {
+@WebServlet("/addroom")
+public class AddRoomServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
 
         HttpSession s = req.getSession();
         Object o = s.getAttribute("id");
-        String itemname = req.getParameter("itemname");
-        int room = Integer.parseInt(req.getParameter("room"));
-        int watts = Integer.parseInt(req.getParameter("watts"));
-        boolean on = false;
-        if (o != null && itemname != null) {
+        String roomname = req.getParameter("roomname");
+        if (o != null && roomname != null) {
 
-            LocalDate ld = LocalDate.now();
             int iduser = (int) o;
 
-            MyItemList mfl = new MyItemList(itemname, ld, iduser, room, watts, on);
-            DBItemList db = new DBItemList();
-            db.newItem(mfl);
+            MyRoomList mrl = new MyRoomList(roomname,iduser);
+            DBRoomList db = new DBRoomList();
+            db.newRoom(mrl);
         } else {
-            error(resp, "Operation forbidden, user is not logged in or itemname is not arriving to server.");
+            error(resp, "Operation forbidden, user is not logged in or roomname is not arriving to server.");
         }
     }
 

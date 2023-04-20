@@ -8,13 +8,14 @@
 </head>
 <body>
 
+
 <%
 
-    HttpSession s = request.getSession(); // citesc sesiunea curenta
-    Object o = s.getAttribute("id"); // daca pe sesiune exista obiectul numit id sau nu exista voi lua diferite decizii
+    HttpSession s = request.getSession(); // Read current session
+    Object o = s.getAttribute("id"); // If on session exist object named ID, I will decide next
     Object email = s.getAttribute("email");
     if (o == null) {
-        response.sendRedirect("newLogin.html"); // il trimit la login, nici nu se executa ce e mai jos
+        response.sendRedirect("newLogin.html"); // send to log in, code below won't execute
     }
 %>
 
@@ -26,16 +27,19 @@ Hello <b><%=email%>
 </p>
 <%--<input type="button" id="delete" value="Delete all" onClick="deleteAll()" />--%>
 
-<div id="listOfToDo">
+<div id="listOfToDo1">
     <table border="1">
         <thead>
         <tr>
             <%--            <th onclick="sorteazaNume(this)">Obiect &dArr;</th>--%>
             <th>Item</th>
             <th>Date</th>
+                <th>Room</th>
+                <th>Watts</th>
+            <th>On</th>
         </tr>
         </thead>
-        <tbody id="obiect">
+        <tbody id="obiect1">
 
         </tbody>
 
@@ -44,13 +48,37 @@ Hello <b><%=email%>
 </div>
 
 <script>
-    loadToDo();
+    loadItemToDo();
+</script>
+<div id="listOfToDo2">
+    <table border="1">
+        <thead>
+        <tr>
+            <%--            <th onclick="sorteazaNume(this)">Obiect &dArr;</th>--%>
+            <th>Room</th>
+        </tr>
+        </thead>
+        <tbody id="obiect2">
+
+        </tbody>
+
+
+    </table>
+</div>
+
+<script>
+    loadRoomToDo()
 </script>
 
+<p>
+    <label for="name1"></label><input type="text" id="name1" placeholder="Add my item"/>
+    <label for="room1"></label><input type="text" id="room1" placeholder="Add my room"/>
+    <label for="watts1"></label><input type="text" id="watts1" placeholder="Add my watts"/>
+<input type="button" id="add1" value="New" onClick="newItemToDo()"/>
 </p>
-<input type="text" id="name" placeholder="Add my item"/>
-<input type="button" id="add" value="New" onClick="newToDo()"/>
-
+<p>
+    <label for="name2"></label><input type="text" id="name2" placeholder="Add my room"/>
+<input type="button" id="add2" value="New" onClick="newRoomToDo()"/>
 </p>
 <a href="logout.jsp">Logout</a>
 

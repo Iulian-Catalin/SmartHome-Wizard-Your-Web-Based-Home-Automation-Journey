@@ -1,6 +1,7 @@
 package usermanagement.db;
 
 import usermanagement.MyItemList;
+import usermanagement.MyRoomList;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ public class DBItemList {
 
         boolean isInserted=false;
         try {
-            // 1. ma conectez la db
+            // 1. DB connection
             final String URL = "jdbc:postgresql://192.168.50.128:5432/postgres";
             final String USERNAME = "postgres";
 
@@ -26,8 +27,8 @@ public class DBItemList {
 
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. creez un prepared ststement si il populez cu date
-            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,itemdate, iduser) VALUES(?,?, ?)");
+            //  2. Statement prepare and insert
+            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,itemdate,iduser,room,watts,on) VALUES(?,?,?,?,?,?)");
             pSt.setString(1,u.getItemName());
 
             Date date = Date.valueOf(u.getItemDate());
@@ -35,8 +36,14 @@ public class DBItemList {
 
             pSt.setInt(3, u.getIduser());
 
+            pSt.setInt(4, u.getRoom());
 
-            // 3. executie
+            pSt.setInt(5, u.getWatts());
+
+            pSt.setBoolean(6, u.isOn());
+
+
+            // 3. Execution
             int insert = pSt.executeUpdate();
             if(insert!=-1)
                 isInserted=true;
@@ -56,61 +63,53 @@ public class DBItemList {
 
     public List<MyItemList> getItemList(int idUser, String search) {
 
-        MyItemList mfl =null;
+        MyItemList mfl;
         List<MyItemList> list = new ArrayList<>();
-        // 1. ma conectez la db
+        // 1. DB connection
         final String URL = "jdbc:postgresql://192.168.50.128:5432/postgres";
         final String USERNAME = "postgres";
 
         final String PASSWORD = "postgres";
-        int id =-1;
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. fac un query pe o tabela , intai creez obiectul
-
-
-
+            // 2. DB quesry and object create
             PreparedStatement pSt = conn.prepareStatement("select * from myitemlist where iduser=? and itemname like CONCAT( '%',?,'%') ORDER BY itemdate desc");
-
 
             pSt.setInt(1, idUser);
             pSt.setString(2, search);
 
 
-            // 3. executie
+            // 3. Execution
             ResultSet rs = pSt.executeQuery();
 
 
 
 
-            // atata timp cat am randuri
+            // As long as entries exist
             while (rs.next()) {
 
                 mfl = new MyItemList();
                 mfl.setId(rs.getInt("id"));
                 mfl.setItemName(rs.getString("itemname"));
-
                 Date dateFromDB = rs.getDate("itemdate");
                 LocalDate localDate = dateFromDB.toLocalDate();
                 mfl.setItemDate(localDate);
-
+                mfl.setRoom(rs.getInt("room"));
+                mfl.setWatts(rs.getInt("watts"));
+                mfl.setOn(rs.getBoolean("on"));
 
                 list.add(mfl);
-
             }
 
             rs.close();
             pSt.close();
             conn.close();
 
-
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
-
         return list;
     }
 
@@ -119,31 +118,13 @@ public class DBItemList {
 
         DBItemList db = new DBItemList();
 
-//       MyItemList m0 = new MyItemList("pizza", LocalDate.now(), 48 );
-//
-//        MyItemList m1 = new MyItemList("cartofi cu ceapa ", LocalDate.now(), 48 );
-//        MyItemList m2 = new MyItemList("peste cu morcovi", LocalDate.now(), 48 );
-//        MyItemList m3 = new MyItemList("inghetata de vanilie", LocalDate.now(), 48 );
-//        MyItemList m4 = new MyItemList("fructe de mare", LocalDate.now(), 48 );
-//
-//
-//        db.newFood(m0);
-//        db.newFood(m1);
-//        db.newFood(m2);
-//        db.newFood(m3);
-//        db.newFood(m4);
-
         List<MyItemList> l = db.getItemList(48,"");
 
         for(int i = 0;i<l.size();i++) {
 
-            MyItemList mfl = (MyItemList) l.get(i);
+            MyItemList mfl = l.get(i);
 
-            System.out.println(mfl.toString()); // just to test we get the right data from db
+            System.out.println(mfl.toString()); // Just to test we get the right data from db
         }
-
-
-
-
     }
 }

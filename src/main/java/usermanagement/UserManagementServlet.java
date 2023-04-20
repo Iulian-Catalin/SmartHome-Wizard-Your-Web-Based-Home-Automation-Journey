@@ -18,9 +18,9 @@ public class UserManagementServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
-        String action = req.getParameter("action"); // name as in the html form
+        String action = req.getParameter("action"); // Name as in the html form
         System.out.println("action is:" + action);
-        boolean succes = false;
+        boolean succes;
         if (action != null && action.equalsIgnoreCase("NEW")) {
 
             succes = newUser(req, resp);
@@ -37,13 +37,13 @@ public class UserManagementServlet extends HttpServlet {
                 error(resp, "there is an error while trying to create this user, pls try again");
             }
 
-            // daca l-a creat cu succes du-te la login , altfel ramai aici
+            // If create is succesfully, go to log in, else stay here.
 
 
         } else if (action != null && action.equalsIgnoreCase("LOGIN")) {
-            //afisare
+            // Display
             succes = loginUser(req, resp);
-            if (succes) // in
+            if (succes) // In
             {
                 RequestDispatcher rd = req.getRequestDispatcher("listMyStuff.jsp");
                 try {
@@ -57,9 +57,7 @@ public class UserManagementServlet extends HttpServlet {
                 RequestDispatcher rd = req.getRequestDispatcher("newLogin.html");
                 try {
                     rd.forward(req, resp);
-                } catch (ServletException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (ServletException | IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -79,37 +77,39 @@ public class UserManagementServlet extends HttpServlet {
     }
 
     private boolean newUser(HttpServletRequest req, HttpServletResponse resp) {
-        // citesc date de la  browser email , parola1, parola2, accept, vreauoferte
+        // Read data from browser email , confirmEmail, pwd, confirmPwd, accept, newsletter
 
         String email = req.getParameter("email");
+        String confirmEmail = req.getParameter("confirmEmail");
         String pwd = req.getParameter("pwd");
         String confirmPwd = req.getParameter("confirmPwd");
         String accepthtml = req.getParameter("accept");
         String newsletterhtml = req.getParameter("newsletter");
 
-        boolean accept = false;
+        boolean accept;
         boolean offer = false;
 
         if (!patternMatches(email)) {
             error(resp, "Formatul e-mailului nu este corect !");
             return false;
         }
-
-        System.out.println(pwd + confirmPwd);
-        // validari
+        if (!email.equals(confirmEmail)) {
+            error(resp, "Email is not the same as confirm email");
+            return false;
+        }
         if (!pwd.equals(confirmPwd)) {
             error(resp, "Password is not the same as confirm password");
             return false;
         }
-        if (accepthtml==null) {
+        if (accepthtml == null) {
             error(resp, "You must accept terms and conditions");
             return false;
-        } else accept=true;
+        } else accept = true;
 
         if (newsletterhtml != null) offer = true;
 
         DBUser dbUser = new DBUser();
-        User u = new User(email, pwd, confirmPwd, accept, offer);
+        User u = new User(email, confirmEmail, pwd, confirmPwd, accept, offer);
         boolean inserted = dbUser.newUser(u);
 
 
@@ -125,8 +125,7 @@ public class UserManagementServlet extends HttpServlet {
 
         DBUser dbUser = new DBUser();
         u = dbUser.login(email, pwd);
-        if (u != null)
-        {
+        if (u != null) {
             HttpSession s = req.getSession();
             s.setAttribute("id", u.getId());
             s.setAttribute("email", u.getEmail());

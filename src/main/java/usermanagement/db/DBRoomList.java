@@ -1,22 +1,18 @@
 package usermanagement.db;
 
-import usermanagement.User;
+import usermanagement.MyRoomList;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DBUser {
+public class DBRoomList {
 
-    public static void main(String[] args) {
-        DBUser dbuser = new DBUser();
-        User u = new User("email", "confirmEmail", "pwd", "confirmPwd", true, true);
-        boolean b = dbuser.newUser(u);
-    }
-
-    public boolean newUser(User u) {
+    public boolean newRoom(MyRoomList u) {
 
         System.out.println(u);
 
-        boolean isInserted = false;
+        boolean isInserted=false;
         try {
             // 1. DB connection
             final String URL = "jdbc:postgresql://192.168.50.128:5432/postgres";
@@ -24,17 +20,15 @@ public class DBUser {
 
             final String PASSWORD = "postgres";
 
-            System.out.println("parola:"+PASSWORD);
 
             Class.forName("org.postgresql.Driver");
 
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. Statement prepare and insert
-            PreparedStatement pSt = conn.prepareStatement("INSERT INTO users (username, password, newsletter) VALUES(?,?,?)");
-            pSt.setString(1,u.getEmail());
-            pSt.setString(2,u.getPwd());
-            pSt.setBoolean(3,u.isNewsletter());
+            //  2. Statement prepare and insert
+            PreparedStatement pSt = conn.prepareStatement("INSERT INTO rooms (roomname, iduser) VALUES(?, ?)");
+            pSt.setString(1,u.getRoomName());
+            pSt.setInt(2, u.getIduser());
 
 
             // 3. Execution
@@ -55,9 +49,10 @@ public class DBUser {
         return isInserted;
     }
 
-    public User login (String username, String password) {
+    public List<MyRoomList> getRoomList(int idUser, String search) {
 
-        User u = null;
+        MyRoomList mrl;
+        List<MyRoomList> list = new ArrayList<>();
         // 1. DB connection
         final String URL = "jdbc:postgresql://192.168.50.128:5432/postgres";
         final String USERNAME = "postgres";
@@ -67,25 +62,27 @@ public class DBUser {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            // 2. Statement prepare and verify
+            // 2. DB quesry and object create
+            PreparedStatement pSt = conn.prepareStatement("select * from rooms where iduser=? and roomname like CONCAT( '%',?,'%') ORDER BY id asc");
 
-            PreparedStatement pSt = conn.prepareStatement("select id, username from users where username=? and password=?");
-
-            pSt.setString(1, username);
-            pSt.setString(2, password);
+            pSt.setInt(1, idUser);
+            pSt.setString(2, search);
 
 
             // 3. Execution
             ResultSet rs = pSt.executeQuery();
 
 
-            // 4. As long as entries exist
+
+
+            // As long as entries exist
             while (rs.next()) {
 
-                u = new User();
-                u.setId(rs.getInt("id"));
-                u.setEmail(rs.getString("username"));
+                mrl = new MyRoomList();
+                mrl.setId(rs.getInt("id"));
+                mrl.setRoomName(rs.getString("roomname"));
 
+                list.add(mrl);
             }
 
             rs.close();
@@ -95,7 +92,21 @@ public class DBUser {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return list;
+    }
 
-        return u;
+
+    public static void main(String[] args) {
+
+        DBRoomList db = new DBRoomList();
+
+        List<MyRoomList> l = db.getRoomList(3,"");
+
+        for(int i = 0;i<l.size();i++) {
+
+            MyRoomList mrl = l.get(i);
+
+            System.out.println(mrl.toString()); // Just to test we get the right data from db
+        }
     }
 }
