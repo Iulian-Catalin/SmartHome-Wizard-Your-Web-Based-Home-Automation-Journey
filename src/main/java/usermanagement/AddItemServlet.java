@@ -22,13 +22,12 @@ public class AddItemServlet extends HttpServlet {
         String itemname = req.getParameter("itemname");
         int room = Integer.parseInt(req.getParameter("room"));
         int watts = Integer.parseInt(req.getParameter("watts"));
-        boolean on = false;
         if (o != null && itemname != null) {
 
             LocalDate ld = LocalDate.now();
             int iduser = (int) o;
 
-            MyItemList mfl = new MyItemList(itemname, ld, iduser, room, watts, on);
+            MyItemList mfl = new MyItemList(itemname, ld, iduser, room, watts);
             DBItemList db = new DBItemList();
             db.newItem(mfl);
         } else {

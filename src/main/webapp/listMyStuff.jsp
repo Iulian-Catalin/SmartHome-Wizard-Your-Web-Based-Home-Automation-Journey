@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>List my stuff</title>
+    <link rel="stylesheet" href="style1.css">
     <script src="actiuni.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -39,8 +40,9 @@ Hello <b><%=email%>
             <th>On</th>
         </tr>
         </thead>
-        <tbody id="obiect1">
-
+        <tbody id="obiect1" >
+        </tbody>
+        <tbody id="toggleOn">
         </tbody>
 
 

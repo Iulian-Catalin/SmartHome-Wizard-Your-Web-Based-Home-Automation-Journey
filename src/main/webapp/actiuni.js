@@ -25,6 +25,7 @@ function loadItemToDo() {
     }).done(function (response) {
         //  printOnDiv(response.listFromBackend);
         display(response.listFromBackend);
+        console.log(response.listFromBackend)
     });
 }
 
@@ -47,13 +48,17 @@ function loadRoomToDo() {
 
 function display(lista) {
     var randuri = "";
+    var toggle = "<label class=\"switch\">\n" +
+        "  <input type=\"checkbox\" id=\"toggleOn\" value=\"false\" onclick=\"valueToggle()\">\n" +
+        "  <span class=\"slider round\"></span>\n" +
+        "</label>";
     lista.forEach(function (obiect) {
         randuri += "<tr>" +
-            "<td>" + obiect.itemName + "</td>" +
+            "<td>" + obiect.itemName +obiect.idDB + "</td>" +
             "<td>" + obiect.itemDate + "</td>" +
             "<td>" + obiect.room + "</td>" +
             "<td>" + obiect.watts + "</td>" +
-            "<td>" + obiect.on + "</td>" +
+            "<td>" + obiect.on + toggle + "</td>" +
             // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
             "</tr>";
     });
@@ -85,17 +90,12 @@ function search(myText) {
 }
 
 
-function printOnDiv(listFromBackend) {
-    var listHtml = '';
-
-    var list = document.getElementById('listOfToDo');
-
-    for (var i = 0; i < listFromBackend.length; i++) {
-        var elemC = listFromBackend[i];
-        var el = '<li>' + elemC.itemName + ' ' + elemC.itemDate + '</li>';
-        listHtml = listHtml + el;
-    }
-    list.innerHTML = '<ol>' + listHtml + '</ol>';
+function valueToggle() {
+    let checkbox = document.getElementById('toggleOn').value;
+    if (checkbox === 'false') {
+        checkbox = 'true';
+        document.getElementById('toggleOn').value = checkbox;
+    } else { checkbox = 'false';
+        document.getElementById('toggleOn').value = checkbox; }
+    alert(checkbox)
 }
-
-

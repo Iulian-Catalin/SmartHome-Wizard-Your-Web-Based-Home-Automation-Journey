@@ -33,6 +33,8 @@ public class ListItemServlet extends HttpServlet {
             List<MyItemList> l = db.getItemList(iduser, search);
             JSONObject json = new JSONObject();
             json.put("listFromBackend", l); // only food name
+            System.out.println(json.put("listFromBackend", l));
+            System.out.println(l);
             String result = json.toString();
             returnJsonResponse(resp, result);
         } else {

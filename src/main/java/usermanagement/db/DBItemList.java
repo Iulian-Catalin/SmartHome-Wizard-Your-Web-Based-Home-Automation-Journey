@@ -1,7 +1,6 @@
 package usermanagement.db;
 
 import usermanagement.MyItemList;
-import usermanagement.MyRoomList;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -28,7 +27,7 @@ public class DBItemList {
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             //  2. Statement prepare and insert
-            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,itemdate,iduser,room,watts,on) VALUES(?,?,?,?,?,?)");
+            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,itemdate,iduser,room,watts) VALUES(?,?,?,?,?)");
             pSt.setString(1,u.getItemName());
 
             Date date = Date.valueOf(u.getItemDate());
@@ -40,7 +39,6 @@ public class DBItemList {
 
             pSt.setInt(5, u.getWatts());
 
-            pSt.setBoolean(6, u.isOn());
 
 
             // 3. Execution
@@ -91,7 +89,6 @@ public class DBItemList {
             while (rs.next()) {
 
                 mfl = new MyItemList();
-                mfl.setId(rs.getInt("id"));
                 mfl.setItemName(rs.getString("itemname"));
                 Date dateFromDB = rs.getDate("itemdate");
                 LocalDate localDate = dateFromDB.toLocalDate();
@@ -99,6 +96,7 @@ public class DBItemList {
                 mfl.setRoom(rs.getInt("room"));
                 mfl.setWatts(rs.getInt("watts"));
                 mfl.setOn(rs.getBoolean("on"));
+                mfl.setIdDB(rs.getInt("id"));
 
                 list.add(mfl);
             }

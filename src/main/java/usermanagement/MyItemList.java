@@ -5,6 +5,9 @@ import java.time.LocalDate;
 public class MyItemList {
 
     private int id;
+
+    private int idDB;
+
     private String itemName;
     private LocalDate itemDate;
     private int iduser;
@@ -35,19 +38,28 @@ public class MyItemList {
         this.watts = watts;
     }
 
-    public MyItemList(String itemName, LocalDate itemDate, int iduser, int room, int watts, boolean on) {
+    public int getIdDB() {
+        return idDB;
+    }
+
+    public void setIdDB(int idDB) {
+        this.idDB = idDB;
+    }
+
+    public MyItemList(String itemName, LocalDate itemDate, int iduser, int room, int watts) {
         this.itemName = itemName;
         this.itemDate = itemDate;
         this.iduser = iduser;
         this.room = room;
         this.watts = watts;
-        this.on = on;
     }
+
 
     @Override
     public String toString() {
         return "MyItemList{" +
                 "id=" + id +
+                ", idDB=" + idDB +
                 ", itemName='" + itemName + '\'' +
                 ", itemDate=" + itemDate +
                 ", iduser=" + iduser +
