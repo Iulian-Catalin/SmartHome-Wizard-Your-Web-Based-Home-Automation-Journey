@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.json.JSONObject;
-import usermanagement.db.DBItemList;
-import usermanagement.db.DBRoomList;
+import db.DBRoomList;
+import usermanagement.MyRoomList;
 
 import java.io.IOException;
 import java.io.PrintWriter;

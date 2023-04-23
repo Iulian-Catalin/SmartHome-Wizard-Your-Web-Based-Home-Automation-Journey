@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import usermanagement.db.DBUser;
+import db.DBUser;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,7 +45,7 @@ public class UserManagementServlet extends HttpServlet {
             succes = loginUser(req, resp);
             if (succes) // In
             {
-                RequestDispatcher rd = req.getRequestDispatcher("listMyStuff.jsp");
+                RequestDispatcher rd = req.getRequestDispatcher("listClientMenu.jsp");
                 try {
                     rd.forward(req, resp);
                 } catch (ServletException e) {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>List my stuff</title>
     <link rel="stylesheet" href="style1.css">
-    <script src="actiuni.js" type="text/javascript"></script>
+    <script src="actions.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
@@ -13,7 +13,7 @@
 <%
 
     HttpSession s = request.getSession(); // Read current session
-    Object o = s.getAttribute("id"); // If on session exist object named ID, I will decide next
+    Object o = s.getAttribute("id"); // If power session exist object named ID, I will decide next
     Object email = s.getAttribute("email");
     if (o == null) {
         response.sendRedirect("newLogin.html"); // send to log in, code below won't execute
@@ -37,7 +37,11 @@ Hello <b><%=email%>
             <th>Date</th>
                 <th>Room</th>
                 <th>Watts</th>
-            <th>On</th>
+            <th>Power</th>
+                <th>Toggle</th>
+                <input type="hidden" id="custId" name="custId">
+                <input type="hidden" id="custId2" name="custId2">
+                <th>Delete</th>
         </tr>
         </thead>
         <tbody id="obiect1" >
@@ -81,6 +85,7 @@ Hello <b><%=email%>
 <p>
     <label for="name2"></label><input type="text" id="name2" placeholder="Add my room"/>
 <input type="button" id="add2" value="New" onClick="newRoomToDo()"/>
+<%--    <button type='submit' onClick={updatePower()}>POWER</button>--%>
 </p>
 <a href="logout.jsp">Logout</a>
 

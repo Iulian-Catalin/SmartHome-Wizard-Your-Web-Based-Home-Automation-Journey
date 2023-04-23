@@ -1,4 +1,4 @@
-package usermanagement;
+package itemmanagement;
 
 import java.time.LocalDate;
 
@@ -16,7 +16,7 @@ public class MyItemList {
 
     private int watts;
 
-    private boolean on;
+    private boolean power;
 
     public void setIduser(int iduser) {
         this.iduser = iduser;
@@ -54,6 +54,10 @@ public class MyItemList {
         this.watts = watts;
     }
 
+    public MyItemList(int idDB, boolean power) {
+        this.idDB = idDB;
+        this.power = power;
+    }
 
     @Override
     public String toString() {
@@ -65,19 +69,19 @@ public class MyItemList {
                 ", iduser=" + iduser +
                 ", room=" + room +
                 ", watts=" + watts +
-                ", on=" + on +
+                ", power=" + power +
                 '}';
     }
 
     public MyItemList() {
     }
 
-    public boolean isOn() {
-        return on;
+    public boolean isPower() {
+        return power;
     }
 
-    public void setOn(boolean on) {
-        this.on = on;
+    public void setPower(boolean power) {
+        this.power = power;
     }
 
     public int getIduser() {

@@ -5,7 +5,7 @@ function newItemToDo() {
     var urlEnc = encodeURI('additem?itemname='+name+'&room='+room+'&watts='+watts)
     console.log(urlEnc);
     $.ajax({url:urlEnc}).done(function (response) {
-        location.href = "listMyStuff.jsp";
+        location.href = "listClientMenu.jsp";
     });
 }
 
@@ -15,7 +15,7 @@ function newRoomToDo() {
     $.ajax({
         url: urlEnc
     }).done(function (response) {
-        location.href = "listMyStuff.jsp";
+        location.href = "listClientMenu.jsp";
     });
 }
 
@@ -49,18 +49,15 @@ function loadRoomToDo() {
 
 function display(lista) {
     var randuri = "";
-    var toggle = "<label class=\"switch\">\n" +
-        "  <input type=\"checkbox\" id=\"toggleOn\" value=\"\" onclick=\"valueToggle()\">\n" +
-        "  <span class=\"slider round\"></span>\n" +
-        "</label>";
-    lista.forEach(function (obiect) {
+    lista.forEach(function (objectJS) {
         randuri += "<tr>" +
-            "<td>" + obiect.itemName +obiect.idDB + "</td>" +
-            "<td>" + obiect.itemDate + "</td>" +
-            "<td>" + obiect.room + "</td>" +
-            "<td>" + obiect.watts + "</td>" +
-            "<td>" + onToggle(obiect.on) + toggle +"</td>" +
-            // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
+            "<td>" + objectJS.itemName +objectJS.idDB + "</td>" +
+            "<td>" + objectJS.itemDate + "</td>" +
+            "<td>" + objectJS.room + "</td>" +
+            "<td>" + objectJS.watts + "</td>" +
+            "<td>" + onToggle(objectJS.power)+"</td>" +
+            "<td> <a href='poweritem?idDB="+objectJS.idDB+"&power="+objectJS.power+"'>POWER</a></td>"  +
+            "<td> <a href='neverforget?action=delete&id="+objectJS.idDB+"'>x</a></td>" +
             "</tr>";
     });
     $("#obiect1").html(randuri);
@@ -91,19 +88,9 @@ function search(myText) {
 }
 
 
-function valueToggle() {
-    let checkbox = document.getElementById('toggleOn').value;
-    var on;
-    if (checkbox === 'false') {
-        checkbox = 'true';
-        document.getElementById('toggleOn').value = checkbox;
-        on = checkbox;
-    } else { checkbox = 'false';
-        document.getElementById('toggleOn').value = checkbox;}
-    alert(checkbox)
-}
-
-function onToggle(object) {
-    document.getElementById('toggleOn').value = object;
-    return object;
+function onToggle(power) {
+    if (power === false) {
+        power = "OFF";
+    }else power="ON";
+    return power;
 }

@@ -1,4 +1,4 @@
-package usermanagement.db;
+package db;
 
 import usermanagement.User;
 
