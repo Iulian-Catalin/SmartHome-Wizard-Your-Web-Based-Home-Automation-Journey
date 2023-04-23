@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>List my stuff</title>
-    <link rel="stylesheet" href="style1.css">
     <script src="actions.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -37,11 +36,10 @@ Hello <b><%=email%>
             <th>Date</th>
                 <th>Room</th>
                 <th>Watts</th>
-            <th>Power</th>
+                <th>Quantity</th>
+            <th>Update</th>
+                <th>Power</th>
                 <th>Toggle</th>
-                <input type="hidden" id="custId" name="custId">
-                <input type="hidden" id="custId2" name="custId2">
-                <th>Delete</th>
         </tr>
         </thead>
         <tbody id="obiect1" >

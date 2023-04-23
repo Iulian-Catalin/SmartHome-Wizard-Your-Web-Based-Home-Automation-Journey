@@ -27,7 +27,7 @@ public class AddItemServlet extends HttpServlet {
             LocalDate ld = LocalDate.now();
             int iduser = (int) o;
 
-            MyItemList mfl = new MyItemList(itemname, ld, iduser, room, watts);
+            MyItemList mfl = new MyItemList(itemname, ld, iduser, room, watts, 1);
             DBItemList db = new DBItemList();
             db.newItem(mfl);
         } else {

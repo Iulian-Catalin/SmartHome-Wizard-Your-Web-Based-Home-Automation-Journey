@@ -80,7 +80,7 @@ public class DBRoomList {
 
                 mrl = new MyRoomList();
                 mrl.setId(rs.getInt("id"));
-                mrl.setRoomName(rs.getString("roomname"));
+                mrl.setRoomName(rs.getString("roomname").trim());
 
                 list.add(mrl);
             }

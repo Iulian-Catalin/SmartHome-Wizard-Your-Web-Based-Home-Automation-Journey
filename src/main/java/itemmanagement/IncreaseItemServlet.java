@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebServlet("/deleteitem")
-public class DeleteItemServlet extends HttpServlet {
+@WebServlet("/increaseitem")
+public class IncreaseItemServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -19,10 +19,12 @@ public class DeleteItemServlet extends HttpServlet {
         HttpSession s = req.getSession();
         Object o = s.getAttribute("id");
         int idDB = Integer.parseInt(req.getParameter("idDB"));
+        int qty = Integer.parseInt(req.getParameter("qty"));
+            ++qty;
+            MyItemList mfl = new MyItemList(idDB, qty);
+            DBItemList db = new DBItemList();
+            db.UpdateQtyItem(mfl);
 
-        MyItemList mfl = new MyItemList(idDB);
-        DBItemList db = new DBItemList();
-        db.DeleteItem(mfl);
         resp.sendRedirect("listClientMenu.jsp");
+        }
     }
-}

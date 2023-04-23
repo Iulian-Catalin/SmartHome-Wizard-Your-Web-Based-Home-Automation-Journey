@@ -27,7 +27,7 @@ public class DBItemList {
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             //  2. Statement prepare and insert
-            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,itemdate,iduser,room,watts) VALUES(?,?,?,?,?)");
+            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,itemdate,iduser,room,watts,qty) VALUES(?,?,?,?,?,?)");
             pSt.setString(1,u.getItemName());
 
             Date date = Date.valueOf(u.getItemDate());
@@ -38,6 +38,8 @@ public class DBItemList {
             pSt.setInt(4, u.getRoom());
 
             pSt.setInt(5, u.getWatts());
+
+            pSt.setInt(6, u.getQuantity());
 
 
 
@@ -68,6 +70,7 @@ public class DBItemList {
         final String USERNAME = "postgres";
 
         final String PASSWORD = "postgres";
+        mfl = new MyItemList();
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -88,8 +91,7 @@ public class DBItemList {
             // As long as entries exist
             while (rs.next()) {
 
-                mfl = new MyItemList();
-                mfl.setItemName(rs.getString("itemname"));
+                mfl.setItemName(rs.getString("itemname").trim());
                 Date dateFromDB = rs.getDate("itemdate");
                 LocalDate localDate = dateFromDB.toLocalDate();
                 mfl.setItemDate(localDate);
@@ -97,8 +99,8 @@ public class DBItemList {
                 mfl.setWatts(rs.getInt("watts"));
                 mfl.setPower(rs.getBoolean("power"));
                 mfl.setIdDB(rs.getInt("id"));
+                mfl.setQuantity(rs.getInt("qty"));
 
-                list.add(mfl);
             }
 
             rs.close();
@@ -108,6 +110,38 @@ public class DBItemList {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            // 2. DB quesry and object create
+            PreparedStatement pSt = conn.prepareStatement("select * from rooms where id=?");
+
+            pSt.setInt(1, mfl.getRoom());
+
+
+            // 3. Execution
+            ResultSet rs = pSt.executeQuery();
+
+
+
+
+            // As long as entries exist
+            while (rs.next()) {
+
+                mfl.setRoomName(rs.getString("roomname").trim());
+
+            }
+
+            rs.close();
+            pSt.close();
+            conn.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        list.add(mfl);
         return list;
     }
 
@@ -173,6 +207,48 @@ public class DBItemList {
             PreparedStatement pSt = conn.prepareStatement("Delete from myitemlist WHERE id=?");
 
             pSt.setInt(1, u.getIdDB());
+
+
+
+            // 3. Execution
+            int insert = pSt.executeUpdate();
+            if(insert!=-1)
+                isInserted=true;
+            System.out.println(isInserted);
+
+            pSt.close();
+            conn.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            isInserted=false;
+
+        }
+
+        return isInserted;
+    }
+
+    public boolean UpdateQtyItem(MyItemList u) {
+
+        System.out.println(u);
+
+        boolean isInserted=false;
+        try {
+            // 1. DB connection
+            final String URL = "jdbc:postgresql://192.168.50.128:5432/postgres";
+            final String USERNAME = "postgres";
+
+            final String PASSWORD = "postgres";
+
+
+            Class.forName("org.postgresql.Driver");
+
+            Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            //  2. Statement prepare and insert
+            PreparedStatement pSt = conn.prepareStatement("UPDATE myitemlist SET qty=?  WHERE id=?");
+
+            pSt.setInt(1, u.getQuantity());
+            pSt.setInt(2, u.getIdDB());
 
 
 

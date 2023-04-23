@@ -34,6 +34,7 @@ public class ListRoomServlet extends HttpServlet {
             List<MyRoomList> l = db.getRoomList(iduser, search);
             JSONObject json = new JSONObject();
             json.put("listFromBackend", l);
+            System.out.println(l);
             String result = json.toString();
             returnJsonResponse(resp, result);
         } else {

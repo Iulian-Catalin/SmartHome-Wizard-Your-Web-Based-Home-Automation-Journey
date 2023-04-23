@@ -51,13 +51,15 @@ function display(list) {
     var rows = "";
     list.forEach(function (objectJS) {
         rows += "<tr>" +
-            "<td>" + objectJS.itemName +objectJS.idDB + "</td>" +
+            "<td>" + objectJS.itemName + "</td>" +
             "<td>" + objectJS.itemDate + "</td>" +
-            "<td>" + objectJS.room + "</td>" +
+            "<td>" + objectJS.roomName + "</td>" +
             "<td>" + objectJS.watts + "</td>" +
+            "<td>" + objectJS.quantity + "</td>" +
+            "<td> <a style=\"text-decoration-line:none;color:darkorange;font-size: xx-large\"  href='increaseitem?idDB="+objectJS.idDB+"&qty="+objectJS.quantity+"'>&#65291</a>" +
+            " <a style=\"text-decoration-line:none;color:blue;font-size: xx-large\" href='decreaseitem?idDB="+objectJS.idDB+"&qty="+objectJS.quantity+"'>&#65293</a></td>" +
             "<td>" + onToggle(objectJS.power)+"</td>" +
-            "<td> <a href='poweritem?idDB="+objectJS.idDB+"&power="+objectJS.power+"'>POWER</a></td>"  +
-            "<td> <a href='deleteitem?idDB="+objectJS.idDB+"'>DELETE</a></td>" +
+            "<td> <a style=\"text-decoration-line:none;color:mediumpurple\" href='poweritem?idDB="+objectJS.idDB+"&power="+objectJS.power+"'>POWER</a></td>"  +
             "</tr>";
     });
     $("#obiect1").html(rows);
@@ -65,9 +67,9 @@ function display(list) {
 
 function display2(list) {
     var rows = "";
-    list.forEach(function (obiect) {
+    list.forEach(function (objectJS) {
         rows += "<tr>" +
-            "<td>" + obiect.roomName + "</td>" +
+            "<td>" + objectJS.roomName + "</td>" +
             // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
             "</tr>";
     });
@@ -79,7 +81,6 @@ function search(myText) {
         cache: false,
         dataType: "json",
         data: {
-            // order: ordinea,
             search: myText
         }
     }).done(function (response) {
@@ -90,7 +91,7 @@ function search(myText) {
 
 function onToggle(power) {
     if (power === false) {
-        power = "OFF";
-    }else power="ON";
+        power = "<label style=\"text-decoration-line:none;color:red\">OFF</label>";
+    }else power="<label style=\"text-decoration-line:none;color:forestgreen\">ON</label>";
     return power;
 }

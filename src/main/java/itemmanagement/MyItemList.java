@@ -14,9 +14,13 @@ public class MyItemList {
 
     private int room;
 
+    private String roomName;
+
     private int watts;
 
     private boolean power;
+
+    private int quantity;
 
     public void setIduser(int iduser) {
         this.iduser = iduser;
@@ -50,12 +54,18 @@ public class MyItemList {
         this.idDB = idDB;
     }
 
-    public MyItemList(String itemName, LocalDate itemDate, int iduser, int room, int watts) {
+    public MyItemList(String itemName, LocalDate itemDate, int iduser, int room, int watts, int quantity) {
         this.itemName = itemName;
         this.itemDate = itemDate;
         this.iduser = iduser;
         this.room = room;
         this.watts = watts;
+        this.quantity = quantity;
+    }
+
+    public MyItemList(int idDB, int quantity) {
+        this.idDB = idDB;
+        this.quantity = quantity;
     }
 
     public MyItemList(int idDB, boolean power) {
@@ -72,8 +82,10 @@ public class MyItemList {
                 ", itemDate=" + itemDate +
                 ", iduser=" + iduser +
                 ", room=" + room +
+                ", roomName='" + roomName + '\'' +
                 ", watts=" + watts +
                 ", power=" + power +
+                ", quantity=" + quantity +
                 '}';
     }
 
@@ -114,5 +126,21 @@ public class MyItemList {
 
     public void setItemDate(LocalDate itemDate) {
         this.itemDate = itemDate;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 }
