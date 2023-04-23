@@ -132,6 +132,8 @@ public class DBItemList {
 
                 mfl.setRoomName(rs.getString("roomname").trim());
 
+                list.add(mfl);
+
             }
 
             rs.close();
@@ -141,7 +143,6 @@ public class DBItemList {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        list.add(mfl);
         return list;
     }
 

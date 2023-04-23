@@ -67,9 +67,9 @@ function display(list) {
 
 function display2(list) {
     var rows = "";
-    list.forEach(function (objectJS) {
+    list.forEach(function (objectJS2) {
         rows += "<tr>" +
-            "<td>" + objectJS.roomName + "</td>" +
+            "<td>" + objectJS2.roomName + "</td>" +
             // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
             "</tr>";
     });
