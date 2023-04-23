@@ -31,7 +31,7 @@ public class AddItemServlet extends HttpServlet {
             DBItemList db = new DBItemList();
             db.newItem(mfl);
         } else {
-            error(resp, "Operation forbidden, user is not logged in or itemname is not arriving to server.");
+            error(resp, "Operation forbidden, user is not logged in or all details are not arriving to server.");
         }
     }
 

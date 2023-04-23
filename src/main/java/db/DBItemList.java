@@ -152,6 +152,46 @@ public class DBItemList {
 
         return isInserted;
     }
+    public boolean DeleteItem(MyItemList u) {
+
+        System.out.println(u);
+
+        boolean isInserted=false;
+        try {
+            // 1. DB connection
+            final String URL = "jdbc:postgresql://192.168.50.128:5432/postgres";
+            final String USERNAME = "postgres";
+
+            final String PASSWORD = "postgres";
+
+
+            Class.forName("org.postgresql.Driver");
+
+            Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            //  2. Statement prepare and insert
+            PreparedStatement pSt = conn.prepareStatement("Delete from myitemlist WHERE id=?");
+
+            pSt.setInt(1, u.getIdDB());
+
+
+
+            // 3. Execution
+            int insert = pSt.executeUpdate();
+            if(insert!=-1)
+                isInserted=true;
+            System.out.println(isInserted);
+
+            pSt.close();
+            conn.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            isInserted=false;
+
+        }
+
+        return isInserted;
+    }
 
     public static void main(String[] args) {
 

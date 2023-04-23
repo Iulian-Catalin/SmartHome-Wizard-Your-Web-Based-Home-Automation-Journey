@@ -47,31 +47,31 @@ function loadRoomToDo() {
 // }
 
 
-function display(lista) {
-    var randuri = "";
-    lista.forEach(function (objectJS) {
-        randuri += "<tr>" +
+function display(list) {
+    var rows = "";
+    list.forEach(function (objectJS) {
+        rows += "<tr>" +
             "<td>" + objectJS.itemName +objectJS.idDB + "</td>" +
             "<td>" + objectJS.itemDate + "</td>" +
             "<td>" + objectJS.room + "</td>" +
             "<td>" + objectJS.watts + "</td>" +
             "<td>" + onToggle(objectJS.power)+"</td>" +
             "<td> <a href='poweritem?idDB="+objectJS.idDB+"&power="+objectJS.power+"'>POWER</a></td>"  +
-            "<td> <a href='neverforget?action=delete&id="+objectJS.idDB+"'>x</a></td>" +
+            "<td> <a href='deleteitem?idDB="+objectJS.idDB+"'>DELETE</a></td>" +
             "</tr>";
     });
-    $("#obiect1").html(randuri);
+    $("#obiect1").html(rows);
 }
 
-function display2(lista) {
-    var randuri = "";
-    lista.forEach(function (obiect) {
-        randuri += "<tr>" +
+function display2(list) {
+    var rows = "";
+    list.forEach(function (obiect) {
+        rows += "<tr>" +
             "<td>" + obiect.roomName + "</td>" +
             // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
             "</tr>";
     });
-    $("#obiect2").html(randuri);
+    $("#obiect2").html(rows);
 }
 
 function search(myText) {

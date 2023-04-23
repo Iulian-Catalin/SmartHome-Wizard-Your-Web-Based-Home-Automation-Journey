@@ -42,6 +42,10 @@ public class MyItemList {
         return idDB;
     }
 
+    public MyItemList(int idDB) {
+        this.idDB = idDB;
+    }
+
     public void setIdDB(int idDB) {
         this.idDB = idDB;
     }
