@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" >
     <title>List my stuff</title>
     <script src="actions.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 <body>
 
@@ -24,8 +25,9 @@ Hello <b><%=email%>
 </p>
 
 <input type="text" placeholder="Search" onkeyup="search(this.value)">
-</p>
+
 <%--<input type="button" id="delete" value="Delete all" onClick="deleteAll()" />--%>
+<p>
 
 <div id="listOfToDo1">
     <table border="1">
@@ -46,11 +48,8 @@ Hello <b><%=email%>
         </tbody>
         <tbody id="toggleOn">
         </tbody>
-
-
     </table>
 </div>
-
 <script>
     loadItemToDo();
 </script>
@@ -73,6 +72,7 @@ Hello <b><%=email%>
 <script>
     loadRoomToDo()
 </script>
+</script>
 
 <p>
     <label for="name1"></label><input type="text" id="name1" placeholder="Add my item"/>
@@ -86,6 +86,7 @@ Hello <b><%=email%>
 <%--    <button type='submit' onClick={updatePower()}>POWER</button>--%>
 </p>
 <a href="logout.jsp">Logout</a>
-
 </body>
+
+
 </html>

@@ -70,7 +70,6 @@ public class DBItemList {
         final String USERNAME = "postgres";
 
         final String PASSWORD = "postgres";
-        mfl = new MyItemList();
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -90,50 +89,44 @@ public class DBItemList {
 
             // As long as entries exist
             while (rs.next()) {
-
+                mfl = new MyItemList();
                 mfl.setItemName(rs.getString("itemname").trim());
                 Date dateFromDB = rs.getDate("itemdate");
                 LocalDate localDate = dateFromDB.toLocalDate();
                 mfl.setItemDate(localDate);
                 mfl.setRoom(rs.getInt("room"));
+
+                {
+                    try {
+                        Class.forName("org.postgresql.Driver");
+                        Connection conn2 = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+                        // 2. DB quesry and object create
+                        PreparedStatement pSt2 = conn.prepareStatement("select * from rooms where id=?");
+
+                        pSt2.setInt(1, mfl.getRoom());
+
+
+                        // 3. Execution
+                        ResultSet rs2 = pSt2.executeQuery();
+
+                        while (rs2.next()) {
+                            mfl.setRoomName(rs2.getString("roomname").trim());
+                        }
+                        rs2.close();
+                        pSt2.close();
+                        conn2.close();
+
+                    } catch (SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
                 mfl.setWatts(rs.getInt("watts"));
                 mfl.setPower(rs.getBoolean("power"));
                 mfl.setIdDB(rs.getInt("id"));
                 mfl.setQuantity(rs.getInt("qty"));
 
-            }
-
-            rs.close();
-            pSt.close();
-            conn.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            // 2. DB quesry and object create
-            PreparedStatement pSt = conn.prepareStatement("select * from rooms where id=?");
-
-            pSt.setInt(1, mfl.getRoom());
-
-
-            // 3. Execution
-            ResultSet rs = pSt.executeQuery();
-
-
-
-
-            // As long as entries exist
-            while (rs.next()) {
-
-                mfl.setRoomName(rs.getString("roomname").trim());
-
                 list.add(mfl);
-
             }
 
             rs.close();
@@ -143,6 +136,8 @@ public class DBItemList {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
         return list;
     }
 
