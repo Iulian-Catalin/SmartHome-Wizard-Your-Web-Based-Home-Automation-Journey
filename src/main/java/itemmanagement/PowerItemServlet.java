@@ -21,11 +21,35 @@ public class PowerItemServlet extends HttpServlet {
         Object o = s.getAttribute("id");
         int idDB = Integer.parseInt(req.getParameter("idDB"));
         boolean power = Boolean.parseBoolean(req.getParameter("power"));
-        power = !power;
+        boolean timer = Boolean.parseBoolean(req.getParameter("timer"));
+        if (!timer) {
+            power = !power;
 
-        MyItemList mfl = new MyItemList(idDB, power);
-        DBItemList db = new DBItemList();
-        db.PowerItem(mfl);
-        resp.sendRedirect("listClientMenu.jsp");
+            MyItemList mfl = new MyItemList(idDB, power);
+            DBItemList db = new DBItemList();
+            db.PowerItem(mfl);
+            resp.sendRedirect("listClientMenu.jsp");
+        }else {
+            power = true;
+
+            MyItemList mfl = new MyItemList(idDB, power);
+            DBItemList db = new DBItemList();
+            db.PowerItem(mfl);
+
+            power = !power;
+            mfl.setPower(power);
+            Thread t2 = new Thread(() -> {
+                try {
+                    TimerItemClass.setTimer(mfl);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            t2.start();
+            resp.sendRedirect("listClientMenu.jsp");
+
+
+        }
+        }
     }
-}

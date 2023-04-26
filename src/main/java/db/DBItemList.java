@@ -158,27 +158,27 @@ public class DBItemList {
 
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
-            //  2. Statement prepare and insert
-            PreparedStatement pSt = conn.prepareStatement("UPDATE myitemlist SET power=? WHERE id=?");
 
-            pSt.setBoolean(1, u.isPower());
-            pSt.setInt(2, u.getIdDB());
+                //  2. Statement prepare and insert
+                PreparedStatement pSt = conn.prepareStatement("UPDATE myitemlist SET power=? WHERE id=?");
+
+                pSt.setBoolean(1, u.isPower());
+                pSt.setInt(2, u.getIdDB());
 
 
+                // 3. Execution
+                int insert = pSt.executeUpdate();
+                if (insert != -1)
+                    isInserted = true;
+                System.out.println(isInserted);
 
-            // 3. Execution
-            int insert = pSt.executeUpdate();
-            if(insert!=-1)
-                isInserted=true;
-            System.out.println(isInserted);
+                pSt.close();
+                conn.close();
+            } catch(SQLException | ClassNotFoundException e){
+                e.printStackTrace();
+                isInserted = false;
 
-            pSt.close();
-            conn.close();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            isInserted=false;
-
-        }
+            }
 
         return isInserted;
     }

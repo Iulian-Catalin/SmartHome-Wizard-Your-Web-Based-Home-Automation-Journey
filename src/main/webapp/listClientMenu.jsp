@@ -5,6 +5,7 @@
     <title>List my stuff</title>
     <script src="actions.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <meta http-equiv="refresh" content="10">
 
 </head>
 <body>
@@ -42,6 +43,7 @@ Hello <b><%=email%>
             <th>Update</th>
                 <th>Power</th>
                 <th>Toggle</th>
+
         </tr>
         </thead>
         <tbody id="obiect1" >

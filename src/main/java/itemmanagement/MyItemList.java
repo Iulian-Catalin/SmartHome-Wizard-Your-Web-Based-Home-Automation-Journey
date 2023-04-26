@@ -22,6 +22,7 @@ public class MyItemList {
 
     private int quantity;
 
+
     public void setIduser(int iduser) {
         this.iduser = iduser;
     }
@@ -143,4 +144,5 @@ public class MyItemList {
     public void setRoomName(String roomName) {
         this.roomName = roomName;
     }
+
 }
