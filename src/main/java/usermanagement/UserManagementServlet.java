@@ -1,5 +1,6 @@
 package usermanagement;
 
+import db.DBUser;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,7 +8,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import db.DBUser;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +15,11 @@ import java.util.regex.Pattern;
 
 @WebServlet("/userManagement")
 public class UserManagementServlet extends HttpServlet {
+
+    public static boolean patternMatches(String emailAddress) {
+        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        return Pattern.compile(regexPattern).matcher(emailAddress).matches();
+    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) {
@@ -143,7 +148,6 @@ public class UserManagementServlet extends HttpServlet {
         return isLoggedIn;
     }
 
-
     private void error(HttpServletResponse resp, String mesaj) {
 
         try {
@@ -166,10 +170,5 @@ public class UserManagementServlet extends HttpServlet {
         assert pr != null;
         pr.write(jsonResponse);
         pr.close();
-    }
-
-    public static boolean patternMatches(String emailAddress) {
-        String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@" + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-        return Pattern.compile(regexPattern).matcher(emailAddress).matches();
     }
 }

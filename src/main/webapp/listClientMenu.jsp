@@ -35,17 +35,17 @@ Hello <b><%=email%>
         <tr>
             <%--            <th onclick="sorteazaNume(this)">Obiect &dArr;</th>--%>
             <th>Item</th>
-            <th>Date</th>
-                <th>Room</th>
-                <th>Watts</th>
-                <th>Quantity</th>
+            <th>Room</th>
+            <th>Watts</th>
+            <th>Quantity</th>
             <th>Update</th>
-                <th>Power</th>
-                <th>Toggle</th>
-
+            <th>Power</th>
+            <th>Toggle</th>
+            <th>Timmer 10s</th>
+                <th>kWh</th>
         </tr>
         </thead>
-        <tbody id="obiect1" >
+        <tbody id="obiect1">
         </tbody>
         <tbody id="toggleOn">
         </tbody>
@@ -54,30 +54,30 @@ Hello <b><%=email%>
 <script>
     loadItemToDo();
 </script>
-<div id="listOfToDo2">
-    <table border="1">
-        <thead>
-        <tr>
-            <%--            <th onclick="sorteazaNume(this)">Obiect &dArr;</th>--%>
-            <th>Room</th>
-        </tr>
-        </thead>
-        <tbody id="obiect2">
+<%--<div id="listOfToDo2">--%>
+<%--    <table border="1">--%>
+<%--        <thead>--%>
+<%--        <tr>--%>
+<%--            &lt;%&ndash;            <th onclick="sorteazaNume(this)">Obiect &dArr;</th>&ndash;%&gt;--%>
+<%--            <th>Room</th>--%>
+<%--        </tr>--%>
+<%--        </thead>--%>
+<%--        <tbody id="obiect2">--%>
 
-        </tbody>
+<%--        </tbody>--%>
 
 
-    </table>
-</div>
+<%--    </table>--%>
+<%--</div>--%>
 
 <script>
-    loadRoomToDo()
+    // loadRoomToDo()
 </script>
 </script>
 
 <p>
     <label for="name1"></label><input type="text" id="name1" placeholder="Add my item"/>
-    <label for="room1">Choose a room</label> <select id="room1">
+    <label for="room1">Choose a room: </label><select id="room1">
     <option value="bedroom">bedroom</option>
     <option value="bathroom">bathroom</option>
     <option value="kitchen">kitchen</option>
@@ -87,9 +87,9 @@ Hello <b><%=email%>
     <input type="button" id="add1" value="New" onClick="newItemToDo()"/>
 </p>
 <p>
-    <label for="name2"></label><input type="text" id="name2" placeholder="Add my room"/>
-<input type="button" id="add2" value="New" onClick="newRoomToDo()"/>
-<%--    <button type='submit' onClick={updatePower()}>POWER</button>--%>
+    <%--    <label for="name2"></label><input type="text" id="name2" placeholder="Add my room"/>--%>
+    <%--<input type="button" id="add2" value="New" onClick="newRoomToDo()"/>--%>
+    <%--    <button type='submit' onClick={updatePower()}>POWER</button>--%>
 </p>
 <a href="logout.jsp">Logout</a>
 </body>

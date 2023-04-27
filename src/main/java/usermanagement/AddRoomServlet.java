@@ -1,12 +1,11 @@
 package usermanagement;
 
+import db.DBRoomList;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import db.DBRoomList;
-import usermanagement.MyRoomList;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,7 +23,7 @@ public class AddRoomServlet extends HttpServlet {
 
             int iduser = (int) o;
 
-            MyRoomList mrl = new MyRoomList(roomname,iduser);
+            MyRoomList mrl = new MyRoomList(roomname, iduser);
             DBRoomList db = new DBRoomList();
             db.newRoom(mrl);
         } else {

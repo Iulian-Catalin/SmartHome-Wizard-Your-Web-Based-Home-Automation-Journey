@@ -20,11 +20,11 @@ public class IncreaseItemServlet extends HttpServlet {
         Object o = s.getAttribute("id");
         int idDB = Integer.parseInt(req.getParameter("idDB"));
         int qty = Integer.parseInt(req.getParameter("qty"));
-            ++qty;
-            MyItemList mfl = new MyItemList(idDB, qty);
-            DBItemList db = new DBItemList();
-            db.UpdateQtyItem(mfl);
+        ++qty;
+        MyItemList mfl = new MyItemList(idDB, qty);
+        DBItemList db = new DBItemList();
+        db.UpdateQtyItem(mfl);
 
         resp.sendRedirect("listClientMenu.jsp");
-        }
     }
+}

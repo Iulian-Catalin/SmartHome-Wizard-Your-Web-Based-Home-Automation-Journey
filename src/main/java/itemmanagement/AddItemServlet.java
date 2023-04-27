@@ -9,7 +9,9 @@ import db.DBItemList;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @WebServlet("/additem")
 public class AddItemServlet extends HttpServlet {
@@ -19,15 +21,16 @@ public class AddItemServlet extends HttpServlet {
 
         HttpSession s = req.getSession();
         Object o = s.getAttribute("id");
-        String itemname = req.getParameter("itemname");
-        int room = Integer.parseInt(req.getParameter("room"));
+        String itemname = req.getParameter("itemname").trim().toLowerCase();
+        String roomName = req.getParameter("room");
         int watts = Integer.parseInt(req.getParameter("watts"));
         if (o != null && itemname != null) {
 
-            LocalDate ld = LocalDate.now();
+            Timestamp its = Timestamp.valueOf(LocalDateTime.now());
+
             int iduser = (int) o;
 
-            MyItemList mfl = new MyItemList(itemname, ld, iduser, room, watts, 1);
+            MyItemList mfl = new MyItemList(itemname, iduser, roomName, watts, 1);
             DBItemList db = new DBItemList();
             db.newItem(mfl);
         } else {

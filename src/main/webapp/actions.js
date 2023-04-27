@@ -55,15 +55,15 @@ function display(list) {
     list.forEach(function (objectJS) {
         rows += "<tr>" +
             "<td>" + objectJS.itemName + "</td>" +
-            "<td>" + objectJS.itemDate + "</td>" +
             "<td>" + objectJS.roomName + "</td>" +
             "<td>" + objectJS.watts + "</td>" +
             "<td>" + objectJS.quantity + "</td>" +
-            "<td> <a style=\"text-decoration-line:none;color:darkorange;font-size: xx-large\"  href='increaseitem?idDB="+objectJS.idDB+"&qty="+objectJS.quantity+"'>&#65291</a>" +
-            " <a style=\"text-decoration-line:none;color:blue;font-size: xx-large\" href='decreaseitem?idDB="+objectJS.idDB+"&qty="+objectJS.quantity+"'>&#65293</a></td>" +
-            "<td>" + onToggle(objectJS.power)+"</td>" +
-            "<td> <a style=\"text-decoration-line:none;color:mediumpurple\" href='poweritem?idDB="+objectJS.idDB+"&power="+objectJS.power+"&timer="+false+"'>POWER</a></td>"  +
-            "<td> <a style=\"text-decoration-line:none;color:mediumpurple\" href='poweritem?idDB="+objectJS.idDB+"&power="+objectJS.power+"&timer="+true+"'>&#10227</a></td>"  +
+            "<td> <a style=\"text-decoration-line:none;color:darkorange;font-size: xx-large\"  href='increaseitem?idDB=" + objectJS.idDB + "&qty=" + objectJS.quantity + "'>&#65291</a>" +
+            " <a style=\"text-decoration-line:none;color:blue;font-size: xx-large\" href='decreaseitem?idDB=" + objectJS.idDB + "&qty=" + objectJS.quantity + "'>&#65293</a></td>" +
+            "<td>" + onToggle(objectJS.power) + "</td>" +
+            "<td> <a style=\"text-decoration-line:none;color:mediumpurple\" href='poweritem?idDB=" + objectJS.idDB + "&power=" + objectJS.power + "&timer=" + false + "'>POWER</a></td>" +
+            "<td> <a style=\"text-decoration-line:none;color:darkturquoise\" href='poweritem?idDB=" + objectJS.idDB + "&power=" + objectJS.power + "&timer=" + true + "'>&#10227</a></td>" +
+            "<td>" + objectJS.consumption + "</td>" +
             "</tr>";
     });
     $("#obiect1").html(rows);

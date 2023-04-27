@@ -8,11 +8,25 @@ import java.util.List;
 
 public class DBRoomList {
 
+    public static void main(String[] args) {
+
+        DBRoomList db = new DBRoomList();
+
+        List<MyRoomList> l = db.getRoomList(3, "");
+
+        for (int i = 0; i < l.size(); i++) {
+
+            MyRoomList mrl = l.get(i);
+
+            System.out.println(mrl.toString()); // Just to test we get the right data from db
+        }
+    }
+
     public boolean newRoom(MyRoomList u) {
 
         System.out.println(u);
 
-        boolean isInserted=false;
+        boolean isInserted = false;
         try {
             // 1. DB connection
             final String URL = "jdbc:postgresql://192.168.50.128:5432/postgres";
@@ -27,21 +41,21 @@ public class DBRoomList {
 
             //  2. Statement prepare and insert
             PreparedStatement pSt = conn.prepareStatement("INSERT INTO rooms (roomname, iduser) VALUES(?, ?)");
-            pSt.setString(1,u.getRoomName());
+            pSt.setString(1, u.getRoomName());
             pSt.setInt(2, u.getIduser());
 
 
             // 3. Execution
             int insert = pSt.executeUpdate();
-            if(insert!=-1)
-                isInserted=true;
+            if (insert != -1)
+                isInserted = true;
             System.out.println(isInserted);
 
             pSt.close();
             conn.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            isInserted=false;
+            isInserted = false;
 
         }
 
@@ -73,8 +87,6 @@ public class DBRoomList {
             ResultSet rs = pSt.executeQuery();
 
 
-
-
             // As long as entries exist
             while (rs.next()) {
 
@@ -93,20 +105,5 @@ public class DBRoomList {
             e.printStackTrace();
         }
         return list;
-    }
-
-
-    public static void main(String[] args) {
-
-        DBRoomList db = new DBRoomList();
-
-        List<MyRoomList> l = db.getRoomList(3,"");
-
-        for(int i = 0;i<l.size();i++) {
-
-            MyRoomList mrl = l.get(i);
-
-            System.out.println(mrl.toString()); // Just to test we get the right data from db
-        }
     }
 }

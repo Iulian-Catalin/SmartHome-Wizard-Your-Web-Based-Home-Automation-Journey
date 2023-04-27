@@ -5,7 +5,10 @@ public class User {
 
     private String confirmEmail;
     private String pwd;
-
+    private String confirmPwd;
+    private boolean accept;
+    private boolean newsletter;
+    private int id;
     public User(String email, String confirmEmail, String pwd, String confirmPwd, boolean accept, boolean newsletter) {
         this.email = email;
         this.confirmEmail = confirmEmail;
@@ -14,21 +17,15 @@ public class User {
         this.accept = accept;
         this.newsletter = newsletter;
     }
+    public User() {
+    }
 
     public String getConfirmEmail() {
         return confirmEmail;
     }
 
-    private String confirmPwd;
-    private boolean accept;
-    private boolean newsletter;
-    private int id;
-
     public void setConfirmEmail(String confirmEmail) {
         this.confirmEmail = confirmEmail;
-    }
-
-    public User() {
     }
 
     public String getEmail() {

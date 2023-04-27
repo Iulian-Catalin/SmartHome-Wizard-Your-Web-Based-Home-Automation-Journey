@@ -24,7 +24,7 @@ public class DBUser {
 
             final String PASSWORD = "postgres";
 
-            System.out.println("parola:"+PASSWORD);
+            System.out.println("parola:" + PASSWORD);
 
             Class.forName("org.postgresql.Driver");
 
@@ -32,22 +32,22 @@ public class DBUser {
 
             // 2. Statement prepare and insert
             PreparedStatement pSt = conn.prepareStatement("INSERT INTO users (username, password, newsletter) VALUES(?,?,?)");
-            pSt.setString(1,u.getEmail());
-            pSt.setString(2,u.getPwd());
-            pSt.setBoolean(3,u.isNewsletter());
+            pSt.setString(1, u.getEmail());
+            pSt.setString(2, u.getPwd());
+            pSt.setBoolean(3, u.isNewsletter());
 
 
             // 3. Execution
             int insert = pSt.executeUpdate();
-            if(insert!=-1)
-                isInserted=true;
+            if (insert != -1)
+                isInserted = true;
             System.out.println(isInserted);
 
             pSt.close();
             conn.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-            isInserted=false;
+            isInserted = false;
 
         }
 
@@ -55,7 +55,7 @@ public class DBUser {
         return isInserted;
     }
 
-    public User login (String username, String password) {
+    public User login(String username, String password) {
 
         User u = null;
         // 1. DB connection

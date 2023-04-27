@@ -2,8 +2,9 @@ package db;
 
 import itemmanagement.MyItemList;
 
+import java.math.BigDecimal;
 import java.sql.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,19 +28,18 @@ public class DBItemList {
             Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 
             //  2. Statement prepare and insert
-            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,itemdate,iduser,room,watts,qty) VALUES(?,?,?,?,?,?)");
+            PreparedStatement pSt = conn.prepareStatement("INSERT INTO myitemlist (itemname,iduser,room,watts,qty) VALUES(?,?,?,?,?)");
             pSt.setString(1,u.getItemName());
 
-            Date date = Date.valueOf(u.getItemDate());
-            pSt.setDate(2, date);
+//            pSt.setTimestamp(2, u.getItemTimeStamp());
 
-            pSt.setInt(3, u.getIduser());
+            pSt.setInt(2, u.getIduser());
 
-            pSt.setInt(4, u.getRoom());
+            pSt.setString(3, u.getRoomName());
 
-            pSt.setInt(5, u.getWatts());
+            pSt.setInt(4, u.getWatts());
 
-            pSt.setInt(6, u.getQuantity());
+            pSt.setInt(5, u.getQuantity());
 
 
 
@@ -85,46 +85,17 @@ public class DBItemList {
             ResultSet rs = pSt.executeQuery();
 
 
-
-
             // As long as entries exist
             while (rs.next()) {
                 mfl = new MyItemList();
                 mfl.setItemName(rs.getString("itemname").trim());
-                Date dateFromDB = rs.getDate("itemdate");
-                LocalDate localDate = dateFromDB.toLocalDate();
-                mfl.setItemDate(localDate);
-                mfl.setRoom(rs.getInt("room"));
-
-                {
-                    try {
-                        Class.forName("org.postgresql.Driver");
-                        Connection conn2 = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-                        // 2. DB quesry and object create
-                        PreparedStatement pSt2 = conn.prepareStatement("select * from rooms where id=?");
-
-                        pSt2.setInt(1, mfl.getRoom());
-
-
-                        // 3. Execution
-                        ResultSet rs2 = pSt2.executeQuery();
-
-                        while (rs2.next()) {
-                            mfl.setRoomName(rs2.getString("roomname").trim());
-                        }
-                        rs2.close();
-                        pSt2.close();
-                        conn2.close();
-
-                    } catch (SQLException | ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
+                mfl.setItemTimeStamp(rs.getTimestamp("itemdate"));
+                mfl.setRoomName(rs.getString("room").trim());
                 mfl.setWatts(rs.getInt("watts"));
                 mfl.setPower(rs.getBoolean("power"));
                 mfl.setIdDB(rs.getInt("id"));
                 mfl.setQuantity(rs.getInt("qty"));
+                mfl.setConsumption(rs.getFloat("consumption"));
 
                 list.add(mfl);
             }
@@ -136,7 +107,6 @@ public class DBItemList {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
 
         return list;
     }
@@ -160,10 +130,94 @@ public class DBItemList {
 
 
                 //  2. Statement prepare and insert
-                PreparedStatement pSt = conn.prepareStatement("UPDATE myitemlist SET power=? WHERE id=?");
+                PreparedStatement pSt = conn.prepareStatement("UPDATE myitemlist SET power=?,itemdate=?,consumption=? WHERE id=?");
 
                 pSt.setBoolean(1, u.isPower());
-                pSt.setInt(2, u.getIdDB());
+                pSt.setInt(4, u.getIdDB());
+
+                if (u.isPower()) {
+                    pSt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+                    MyItemList mfl = new MyItemList();
+                    List<MyItemList> list = new ArrayList<>();
+                    // 1. DB connection
+                    try {
+                        Class.forName("org.postgresql.Driver");
+                        Connection conn2 = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+                        // 2. DB quesry and object create
+                        PreparedStatement pSt2 = conn.prepareStatement("select * from myitemlist where id=?");
+
+                        pSt2.setInt(1, u.getIdDB());
+
+
+                        // 3. Execution
+                        ResultSet rs = pSt2.executeQuery();
+
+
+                        // As long as entries exist
+                        while (rs.next()) {
+
+                            mfl.setConsumption(rs.getFloat("consumption"));
+
+                        }
+
+                        rs.close();
+                        pSt2.close();
+                        conn2.close();
+
+                    } catch (SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+
+                    pSt.setFloat(3, mfl.getConsumption());
+                } else {
+                    MyItemList mfl = new MyItemList();
+                    List<MyItemList> list = new ArrayList<>();
+                    // 1. DB connection
+                    try {
+                        Class.forName("org.postgresql.Driver");
+                        Connection conn2 = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+                        // 2. DB quesry and object create
+                        PreparedStatement pSt2 = conn.prepareStatement("select * from myitemlist where id=?");
+
+                        pSt2.setInt(1, u.getIdDB());
+
+
+                        // 3. Execution
+                        ResultSet rs = pSt2.executeQuery();
+
+
+                        // As long as entries exist
+                        while (rs.next()) {
+                            mfl.setItemTimeStamp(rs.getTimestamp("itemdate"));
+                            mfl.setConsumption(rs.getFloat("consumption"));
+                            mfl.setQuantity(rs.getInt("qty"));
+                            mfl.setWatts(rs.getInt("watts"));
+                        }
+
+                        rs.close();
+                        pSt2.close();
+                        conn2.close();
+
+                    } catch (SQLException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Timestamp timestamp1 = mfl.getItemTimeStamp();
+                    Timestamp timestamp2 = Timestamp.valueOf(LocalDateTime.now());
+
+                    long milliseconds = timestamp2.getTime() - timestamp1.getTime() ;
+                    double seconds = (double) ( milliseconds / 1000);
+                    double hours = seconds / 3_600;
+                    BigDecimal kwh = new BigDecimal(((mfl.getWatts() * hours) / 1_000)*mfl.getQuantity());
+                    String suma = kwh.toString().substring(0,5);
+                    float kwh2= Float.valueOf(suma) + mfl.getConsumption();
+                    pSt.setTimestamp(2, null);
+                    pSt.setFloat(3, kwh2);
+
+                    System.out.println(kwh2);
+
+                }
 
 
                 // 3. Execution
@@ -245,7 +299,6 @@ public class DBItemList {
 
             pSt.setInt(1, u.getQuantity());
             pSt.setInt(2, u.getIdDB());
-
 
 
             // 3. Execution

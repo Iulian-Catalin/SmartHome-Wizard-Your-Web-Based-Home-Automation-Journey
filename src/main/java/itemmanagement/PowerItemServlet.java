@@ -1,12 +1,11 @@
 package itemmanagement;
 
-import itemmanagement.MyItemList;
+import db.DBItemList;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import db.DBItemList;
 
 import java.io.IOException;
 
@@ -22,6 +21,7 @@ public class PowerItemServlet extends HttpServlet {
         int idDB = Integer.parseInt(req.getParameter("idDB"));
         boolean power = Boolean.parseBoolean(req.getParameter("power"));
         boolean timer = Boolean.parseBoolean(req.getParameter("timer"));
+        int idUser = (int) o;
         if (!timer) {
             power = !power;
 
@@ -29,7 +29,7 @@ public class PowerItemServlet extends HttpServlet {
             DBItemList db = new DBItemList();
             db.PowerItem(mfl);
             resp.sendRedirect("listClientMenu.jsp");
-        }else {
+        } else {
             power = true;
 
             MyItemList mfl = new MyItemList(idDB, power);
@@ -51,5 +51,5 @@ public class PowerItemServlet extends HttpServlet {
 
 
         }
-        }
     }
+}

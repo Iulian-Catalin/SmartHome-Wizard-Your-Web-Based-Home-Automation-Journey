@@ -1,6 +1,6 @@
 package itemmanagement;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 public class MyItemList {
 
@@ -9,7 +9,7 @@ public class MyItemList {
     private int idDB;
 
     private String itemName;
-    private LocalDate itemDate;
+    private Timestamp itemTimeStamp;
     private int iduser;
 
     private int room;
@@ -22,6 +22,7 @@ public class MyItemList {
 
     private int quantity;
 
+    private float consumption;
 
     public void setIduser(int iduser) {
         this.iduser = iduser;
@@ -55,11 +56,10 @@ public class MyItemList {
         this.idDB = idDB;
     }
 
-    public MyItemList(String itemName, LocalDate itemDate, int iduser, int room, int watts, int quantity) {
+    public MyItemList(String itemName, int iduser, String roomName, int watts, int quantity) {
         this.itemName = itemName;
-        this.itemDate = itemDate;
         this.iduser = iduser;
-        this.room = room;
+        this.roomName = roomName;
         this.watts = watts;
         this.quantity = quantity;
     }
@@ -80,13 +80,14 @@ public class MyItemList {
                 "id=" + id +
                 ", idDB=" + idDB +
                 ", itemName='" + itemName + '\'' +
-                ", itemDate=" + itemDate +
+                ", itemTimeStamp=" + itemTimeStamp +
                 ", iduser=" + iduser +
                 ", room=" + room +
                 ", roomName='" + roomName + '\'' +
                 ", watts=" + watts +
                 ", power=" + power +
                 ", quantity=" + quantity +
+                ", consumption=" + consumption +
                 '}';
     }
 
@@ -121,12 +122,12 @@ public class MyItemList {
         this.itemName = itemName;
     }
 
-    public LocalDate getItemDate() {
-        return itemDate;
+    public Timestamp getItemTimeStamp() {
+        return itemTimeStamp;
     }
 
-    public void setItemDate(LocalDate itemDate) {
-        this.itemDate = itemDate;
+    public void setItemTimeStamp(Timestamp itemTimeStamp) {
+        this.itemTimeStamp = itemTimeStamp;
     }
 
     public int getQuantity() {
@@ -145,4 +146,11 @@ public class MyItemList {
         this.roomName = roomName;
     }
 
+    public float getConsumption() {
+        return consumption;
+    }
+
+    public void setConsumption(float consumption) {
+        this.consumption = consumption;
+    }
 }
