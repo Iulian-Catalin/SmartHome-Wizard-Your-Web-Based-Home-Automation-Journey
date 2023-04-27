@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" >
     <title>List my stuff</title>
     <script src="actions.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <meta http-equiv="refresh" content="10">
+    <meta charset="UTF-8" http-equiv="refresh" content="10">
 
 </head>
 <body>
@@ -78,9 +77,14 @@ Hello <b><%=email%>
 
 <p>
     <label for="name1"></label><input type="text" id="name1" placeholder="Add my item"/>
-    <label for="room1"></label><input type="text" id="room1" placeholder="Add my room"/>
-    <label for="watts1"></label><input type="text" id="watts1" placeholder="Add my watts"/>
-<input type="button" id="add1" value="New" onClick="newItemToDo()"/>
+    <label for="room1">Choose a room</label> <select id="room1">
+    <option value="bedroom">bedroom</option>
+    <option value="bathroom">bathroom</option>
+    <option value="kitchen">kitchen</option>
+    <option value="livingroom" selected>livingroom</option>
+</select>
+    <label for="watts1"></label><input type="text" id="watts1" placeholder="Add item watts"/>
+    <input type="button" id="add1" value="New" onClick="newItemToDo()"/>
 </p>
 <p>
     <label for="name2"></label><input type="text" id="name2" placeholder="Add my room"/>

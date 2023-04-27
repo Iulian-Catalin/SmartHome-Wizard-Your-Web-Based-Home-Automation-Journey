@@ -71,7 +71,16 @@ public class UserManagementServlet extends HttpServlet {
             }
         } else {
             System.out.println("nu a venit action, deci nu fac nimic ");
-            error(resp, "erro on ui side");
+            RequestDispatcher rd = req.getRequestDispatcher("listClientMenu.jsp");
+            try {
+                rd.forward(req, resp);
+            } catch (ServletException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
         }
 
     }
