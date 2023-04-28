@@ -1,6 +1,6 @@
 # SimulatorAutomatizareCasa
 beta
-LINK remote acces: http://192.168.50.128:8080/SimulatorAutomatizareCasa_war_exploded/listClientMenu.jsp
+LINK remote acces: http://185.123.245.51:8080/SimulatorAutomatizareCasa_war_exploded/newLogin.html
 
 RO: Aplicatie WEB remote de house management cu conectare la data de date PostgreSQL, scrisa in java. Aplicatia contine pagina de logare,
 pagina de creare cont si pagina de management a bunurilor electrice. Pagina de create cont este cu verificare multipla, 
