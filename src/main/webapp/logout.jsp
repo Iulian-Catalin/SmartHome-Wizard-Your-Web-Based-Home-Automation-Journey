@@ -12,5 +12,6 @@
     response.sendRedirect("newLogin.html");
 
 %>
+
 </body>
 </html>

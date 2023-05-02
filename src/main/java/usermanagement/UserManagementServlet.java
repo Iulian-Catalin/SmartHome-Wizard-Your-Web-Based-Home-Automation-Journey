@@ -33,9 +33,7 @@ public class UserManagementServlet extends HttpServlet {
                 RequestDispatcher rd = req.getRequestDispatcher("newLogin.html");
                 try {
                     rd.forward(req, resp);
-                } catch (ServletException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (ServletException | IOException e) {
                     e.printStackTrace();
                 }
             } else {
@@ -53,9 +51,7 @@ public class UserManagementServlet extends HttpServlet {
                 RequestDispatcher rd = req.getRequestDispatcher("listClientMenu.jsp");
                 try {
                     rd.forward(req, resp);
-                } catch (ServletException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (ServletException | IOException e) {
                     e.printStackTrace();
                 }
             } else {
@@ -79,9 +75,7 @@ public class UserManagementServlet extends HttpServlet {
             RequestDispatcher rd = req.getRequestDispatcher("listClientMenu.jsp");
             try {
                 rd.forward(req, resp);
-            } catch (ServletException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (ServletException | IOException e) {
                 e.printStackTrace();
             }
 
@@ -96,15 +90,16 @@ public class UserManagementServlet extends HttpServlet {
         String email = req.getParameter("email");
         String confirmEmail = req.getParameter("confirmEmail");
         String pwd = req.getParameter("pwd");
-        String confirmPwd = req.getParameter("confirmPwd");
-        String accepthtml = req.getParameter("accept");
+        String confirmPwd = req.getParameter("confirmPwd").trim();
+        String accepthtml = req.getParameter("accept").trim();
         String newsletterhtml = req.getParameter("newsletter");
 
         boolean accept;
         boolean offer = false;
 
         if (!patternMatches(email)) {
-            error(resp, "Formatul e-mailului nu este corect !");
+            error(resp, "The email format is not correct!");
+
             return false;
         }
         if (!email.equals(confirmEmail)) {

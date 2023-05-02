@@ -26,8 +26,6 @@ public class AddItemServlet extends HttpServlet {
         int watts = Integer.parseInt(req.getParameter("watts"));
         if (o != null && itemname != null) {
 
-            Timestamp its = Timestamp.valueOf(LocalDateTime.now());
-
             int iduser = (int) o;
 
             MyItemList mfl = new MyItemList(itemname, iduser, roomName, watts, 1);
