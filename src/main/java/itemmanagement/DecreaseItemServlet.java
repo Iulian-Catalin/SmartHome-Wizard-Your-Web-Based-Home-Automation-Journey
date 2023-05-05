@@ -24,12 +24,12 @@ public class DecreaseItemServlet extends HttpServlet {
         if (qty == 1) {
             MyItemList mfl = new MyItemList(idDB);
             DBItemList db = new DBItemList();
-            db.DeleteItem(mfl);
+            db.deleteItem(mfl);
         } else {
             --qty;
             MyItemList mfl = new MyItemList(idDB, qty);
             DBItemList db = new DBItemList();
-            db.UpdateQtyItem(mfl);
+            db.updateQtyItem(mfl);
         }
         resp.sendRedirect("listClientMenu.jsp");
     }

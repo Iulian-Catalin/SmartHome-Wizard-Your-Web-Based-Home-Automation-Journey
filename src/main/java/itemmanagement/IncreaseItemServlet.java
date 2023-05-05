@@ -23,7 +23,7 @@ public class IncreaseItemServlet extends HttpServlet {
         ++qty;
         MyItemList mfl = new MyItemList(idDB, qty);
         DBItemList db = new DBItemList();
-        db.UpdateQtyItem(mfl);
+        db.updateQtyItem(mfl);
 
         resp.sendRedirect("listClientMenu.jsp");
     }

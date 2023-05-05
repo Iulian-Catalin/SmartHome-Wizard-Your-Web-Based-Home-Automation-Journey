@@ -9,9 +9,6 @@ import db.DBItemList;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @WebServlet("/additem")
 public class AddItemServlet extends HttpServlet {

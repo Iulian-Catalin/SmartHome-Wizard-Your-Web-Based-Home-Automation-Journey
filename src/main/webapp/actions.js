@@ -29,9 +29,9 @@ function loadItemToDo() {
     });
 }
 
-function setTimeot(){
-    setTimeot(loadItemToDo(),1000);
-}
+// function setTimeot(){
+//     setTimeot(loadItemToDo(),1000);
+// }
 function loadRoomToDo() {
     $.ajax({
         url: 'listroom'
@@ -69,16 +69,16 @@ function display(list) {
     $("#obiect1").html(rows);
 }
 
-function display2(list) {
-    var rows = "";
-    list.forEach(function (objectJS2) {
-        rows += "<tr>" +
-            "<td>" + objectJS2.roomName +"</td>" +
-            // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
-            "</tr>";
-    });
-    $("#obiect2").html(rows);
-}
+// function display2(list) {
+//     var rows = "";
+//     list.forEach(function (objectJS2) {
+//         rows += "<tr>" +
+//             "<td>" + objectJS2.roomName +"</td>" +
+//             // "<td> <a href='neverforget?action=delete&id="+obiect.id+"'>x</a></td>" +
+//             "</tr>";
+//     });
+//     $("#obiect2").html(rows);
+// }
 
 function search(myText) {
     $.ajax("listitem", {

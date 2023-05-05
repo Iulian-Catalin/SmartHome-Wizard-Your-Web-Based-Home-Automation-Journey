@@ -27,14 +27,14 @@ public class PowerItemServlet extends HttpServlet {
 
             MyItemList mfl = new MyItemList(idDB, power);
             DBItemList db = new DBItemList();
-            db.PowerItem(mfl);
+            db.powerItem(mfl);
             resp.sendRedirect("listClientMenu.jsp");
         } else {
             power = true;
 
             MyItemList mfl = new MyItemList(idDB, power);
             DBItemList db = new DBItemList();
-            db.PowerItem(mfl);
+            db.powerItem(mfl);
 
             power = !power;
             mfl.setPower(power);

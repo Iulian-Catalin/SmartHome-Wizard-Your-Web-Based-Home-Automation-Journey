@@ -111,7 +111,7 @@ public class DBItemList {
         return list;
     }
 
-    public boolean PowerItem(MyItemList u) {
+    public boolean powerItem(MyItemList u) {
 
         System.out.println(u);
 
@@ -236,7 +236,7 @@ public class DBItemList {
 
         return isInserted;
     }
-    public boolean DeleteItem(MyItemList u) {
+    public boolean deleteItem(MyItemList u) {
 
         System.out.println(u);
 
@@ -277,7 +277,7 @@ public class DBItemList {
         return isInserted;
     }
 
-    public boolean UpdateQtyItem(MyItemList u) {
+    public boolean updateQtyItem(MyItemList u) {
 
         System.out.println(u);
 

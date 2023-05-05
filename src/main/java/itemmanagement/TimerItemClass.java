@@ -12,7 +12,7 @@ public class TimerItemClass {
         worker.start();
         latch.await();
         DBItemList db = new DBItemList();
-        db.PowerItem(mfl);
+        db.powerItem(mfl);
     }
 
 
